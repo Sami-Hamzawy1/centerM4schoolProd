@@ -5,6 +5,6 @@ deployment:
   tasks:
     - export DEPLOYPATH=/home/$USER/public_html/center.meshmadrasa.com/
     - /bin/mkdir -p $DEPLOYPATH
-    - /bin/cp -R * $DEPLOYPATH
-    # Shell globbing does not include dotfiles, including this SPA config.
-    - /bin/cp -f .htaccess $DEPLOYPATH
+    # Avoid wildcard deployment: recursively copy generated files, but never
+    # copy repository metadata or cPanel's deployment instructions themselves.
+    - /usr/bin/find . -mindepth 1 -maxdepth 1 ! -name .git ! -name .cpanel.yml ! -name .gitignore ! -name .last_build_id -exec /bin/cp -R {} $DEPLOYPATH \;
