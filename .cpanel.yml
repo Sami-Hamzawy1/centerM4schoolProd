@@ -1,0 +1,10 @@
+---
+# cPanel Git Version Control deploy task for center.meshmadrasa.com.
+# Flutter copies this file into build/web during each release build.
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/$USER/public_html/center.meshmadrasa.com/
+    - /bin/mkdir -p $DEPLOYPATH
+    - /bin/cp -R * $DEPLOYPATH
+    # Shell globbing does not include dotfiles, including this SPA config.
+    - /bin/cp -f .htaccess $DEPLOYPATH
